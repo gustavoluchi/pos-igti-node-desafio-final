@@ -35,6 +35,7 @@ model livros {
   estoque         Int
   autor_id        Int
   autores         autores @relation(fields: [autor_id], references: [autor_id])
+  livroinfo       Json
 }
 
 model vendas {
