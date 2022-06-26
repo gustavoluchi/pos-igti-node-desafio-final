@@ -1,28 +1,29 @@
 import {
-  Controller,
-  Get,
-  Post,
   Body,
-  Patch,
-  Param,
+  Controller,
   Delete,
+  Get,
+  HttpCode,
+  Param,
+  Post,
+  Put,
+  Query,
 } from '@nestjs/common';
+import { Prisma } from '@prisma/client';
 import { LivroService } from './livro.service';
-import { CreateLivroDto } from './dto/create-livro.dto';
-import { UpdateLivroDto } from './dto/update-livro.dto';
 
 @Controller('livro')
 export class LivroController {
   constructor(private readonly livroService: LivroService) {}
 
   @Post()
-  create(@Body() createLivroDto: CreateLivroDto) {
-    return this.livroService.create(createLivroDto);
+  create(@Body() createlivroDto: Prisma.livrosCreateInput) {
+    return this.livroService.create(createlivroDto);
   }
 
   @Get()
-  findAll() {
-    return this.livroService.findAll();
+  findAll(@Query() where: Prisma.livrosWhereInput) {
+    return this.livroService.findAll(where);
   }
 
   @Get(':id')
@@ -30,9 +31,13 @@ export class LivroController {
     return this.livroService.findOne(+id);
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateLivroDto: UpdateLivroDto) {
-    return this.livroService.update(+id, updateLivroDto);
+  @Put(':id')
+  @HttpCode(204)
+  update(
+    @Param('id') id: string,
+    @Body() updatelivroDto: Prisma.livrosUpdateInput
+  ) {
+    this.livroService.update(+id, updatelivroDto);
   }
 
   @Delete(':id')

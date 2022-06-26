@@ -1,28 +1,29 @@
 import {
-  Controller,
-  Get,
-  Post,
   Body,
-  Patch,
-  Param,
+  Controller,
   Delete,
+  Get,
+  HttpCode,
+  Param,
+  Post,
+  Put,
+  Query,
 } from '@nestjs/common';
+import { Prisma } from '@prisma/client';
 import { ClienteService } from './cliente.service';
-import { CreateClienteDto } from './dto/create-cliente.dto';
-import { UpdateClienteDto } from './dto/update-cliente.dto';
 
 @Controller('cliente')
 export class ClienteController {
   constructor(private readonly clienteService: ClienteService) {}
 
   @Post()
-  create(@Body() createClienteDto: CreateClienteDto) {
+  create(@Body() createClienteDto: Prisma.clientesCreateInput) {
     return this.clienteService.create(createClienteDto);
   }
 
   @Get()
-  findAll() {
-    return this.clienteService.findAll();
+  findAll(@Query() where: Prisma.clientesWhereInput) {
+    return this.clienteService.findAll(where);
   }
 
   @Get(':id')
@@ -30,9 +31,13 @@ export class ClienteController {
     return this.clienteService.findOne(+id);
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateClienteDto: UpdateClienteDto) {
-    return this.clienteService.update(+id, updateClienteDto);
+  @Put(':id')
+  @HttpCode(204)
+  update(
+    @Param('id') id: string,
+    @Body() updateClienteDto: Prisma.clientesUpdateInput
+  ) {
+    this.clienteService.update(+id, updateClienteDto);
   }
 
   @Delete(':id')

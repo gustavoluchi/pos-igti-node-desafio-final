@@ -3,6 +3,7 @@ import { PrismaClient } from '@prisma/client';
 
 @Injectable()
 export class PrismaService extends PrismaClient implements OnModuleInit {
+  // Optional. If omited, connection will happen lazily on first call to DB
   async onModuleInit() {
     await this.$connect();
   }

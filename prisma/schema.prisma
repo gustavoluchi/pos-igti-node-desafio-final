@@ -11,37 +11,40 @@ datasource db {
 }
 
 model clientes {
-  cliente_id      Int       @id @default(autoincrement())
-  nome            String
-  email           String
-  senha           String
-  telefone        String
-  endereco        String
-  vendas          vendas[]
+  cliente_id Int      @id @default(autoincrement())
+  nome       String
+  email      String
+  senha      String
+  telefone   String
+  endereco   String
+  vendas     vendas[]
 }
 
 model autores {
-  autor_id        Int       @id @default(autoincrement())
-  nome            String
-  email           String
-  telefone        String
-  livros          livros[]
+  autor_id Int      @id @default(autoincrement())
+  nome     String
+  email    String
+  telefone String
+  livros   livros[]
 }
 
 model livros {
-  livro_id        Int           @id @default(autoincrement())
-  nome            String
-  valor           String
-  estoque         Int
-  autor_id        Int
-  autores         autores @relation(fields: [autor_id], references: [autor_id])
-  livroinfo       Json
+  livro_id  Int      @id @default(autoincrement())
+  nome      String
+  valor     String
+  estoque   Int
+  autor_id  Int
+  autores   autores  @relation(fields: [autor_id], references: [autor_id])
+  livroinfo Json?
+  vendas    vendas[]
 }
 
 model vendas {
-  venda_id        Int           @id @default(autoincrement())
-  valor           String
-  data            DateTime
-  cliente_id      Int
-  clientes        clientes @relation(fields: [cliente_id], references: [cliente_id])
+  venda_id   Int      @id @default(autoincrement())
+  valor      String
+  data       DateTime
+  cliente_id Int
+  clientes   clientes @relation(fields: [cliente_id], references: [cliente_id])
+  livro_id   Int
+  livros     livros   @relation(fields: [livro_id], references: [livro_id])
 }

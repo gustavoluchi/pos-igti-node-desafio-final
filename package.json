@@ -8,15 +8,20 @@
     "test": "nx test"
   },
   "private": true,
+  "prisma": {
+    "seed": "/home/gus/dev/igti/Modulo2-Node/desafiofinal/desafio-final-nest/prisma/seed.sh"
+  },
   "dependencies": {
     "@nestjs/common": "^8.0.0",
     "@nestjs/config": "^2.1.0",
     "@nestjs/core": "^8.0.0",
     "@nestjs/mapped-types": "^1.0.1",
     "@nestjs/platform-express": "^8.0.0",
+    "@nestjs/swagger": "^5.2.1",
     "@prisma/client": "^3.15.2",
     "reflect-metadata": "^0.1.13",
     "rxjs": "^7.0.0",
+    "swagger-ui-express": "^4.4.0",
     "tslib": "^2.3.0"
   },
   "devDependencies": {
