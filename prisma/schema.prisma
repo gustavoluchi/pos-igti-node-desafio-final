@@ -31,20 +31,20 @@ model autores {
 model livros {
   livro_id  Int      @id @default(autoincrement())
   nome      String
-  valor     String
+  valor     Int
   estoque   Int
   autor_id  Int
-  autores   autores  @relation(fields: [autor_id], references: [autor_id])
+  autor     autores  @relation(fields: [autor_id], references: [autor_id])
   livroinfo Json?
   vendas    vendas[]
 }
 
 model vendas {
   venda_id   Int      @id @default(autoincrement())
-  valor      String
-  data       DateTime
+  valor      Int
+  data       DateTime  @default(now())
   cliente_id Int
-  clientes   clientes @relation(fields: [cliente_id], references: [cliente_id])
+  cliente   clientes @relation(fields: [cliente_id], references: [cliente_id])
   livro_id   Int
-  livros     livros   @relation(fields: [livro_id], references: [livro_id])
+  livro     livros   @relation(fields: [livro_id], references: [livro_id])
 }

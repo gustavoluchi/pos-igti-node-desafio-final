@@ -3,8 +3,8 @@ import {
   Controller,
   Delete,
   Get,
-  HttpCode,
   Param,
+  ParseIntPipe,
   Post,
   Put,
   Query,
@@ -21,6 +21,11 @@ export class LivroController {
     return this.livroService.create(createlivroDto);
   }
 
+  @Post(':id/avaliacao')
+  createReview(@Param('id', ParseIntPipe) id: number, @Body() review: Review) {
+    return this.livroService.createReview(id, review);
+  }
+
   @Get()
   findAll(@Query() where: Prisma.livrosWhereInput) {
     return this.livroService.findAll(where);
@@ -32,16 +37,28 @@ export class LivroController {
   }
 
   @Put(':id')
-  @HttpCode(204)
   update(
     @Param('id') id: string,
     @Body() updatelivroDto: Prisma.livrosUpdateInput
   ) {
-    this.livroService.update(+id, updatelivroDto);
+    return this.livroService.update(+id, updatelivroDto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
+  remove(@Param('id') id: number) {
     return this.livroService.remove(+id);
+  }
+
+  @Delete('/info/:id')
+  removeInfo(@Param('id', ParseIntPipe) id: number) {
+    return this.livroService.removeInfo(id);
+  }
+
+  @Delete(':id/avaliacao/:index')
+  removeReview(
+    @Param('id', ParseIntPipe) id: number,
+    @Param('index', ParseIntPipe) index: number
+  ) {
+    return this.livroService.removeReview(id, index);
   }
 }

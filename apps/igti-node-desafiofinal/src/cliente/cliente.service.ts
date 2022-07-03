@@ -44,10 +44,10 @@ export class ClienteService {
   }
 
   async remove(cliente_id: number) {
-    const cliente = await this.prisma.vendas.findFirst({
+    const associatedSell = await this.prisma.vendas.findFirst({
       where: { cliente_id },
     });
-    if (cliente !== null) {
+    if (associatedSell !== null) {
       // TODO: create a bussiness exception
       throw new BadRequestException(
         'Não é permitida a deleção de cliente com venda vinculada.'
